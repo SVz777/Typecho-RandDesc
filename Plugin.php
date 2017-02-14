@@ -85,8 +85,8 @@ class RandDesc_Plugin implements Typecho_Plugin_Interface
      */
     public static function desc(){
         $db = Typecho_Db::get();
-        //TODO 自动从数据库获取签名数量
-        $rand=rand(0,143);
+        $num=$db->fetchRow($db->select(array('COUNT(*)' => 'num'))->from('table.randdesc'))["num"];
+        $rand=rand(0,$num);
         $query= $db->select('description')->from('table.randdesc')->where('id = ?',$rand);
         echo '<p class="description" num="'.$rand.'">'.$db->fetchRow($query)["description"].'</p>';
     }
